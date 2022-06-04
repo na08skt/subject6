@@ -6,8 +6,9 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @book_new = Book.new
     @post_comment = BookComment.new
-    # @comments = BookComment.all
+    # bookごとにコメント表示するための矢印↓
     @comments = @book.book_comments
+    @favorites = @book.favorites
   end
 
   def index
