@@ -33,4 +33,23 @@ class User < ApplicationRecord
     # follower_users.find_by(followed_id: user.id).present?
     follower_users.include?(user)
   end
+
+  def self.looks(search, word)
+    if search == "perfect_match"
+      @users = User.where("name LIKE?", "#{word}")
+      @users = User.where("introduction LIKE?", "#{word}")
+    elsif search == "forward_match"
+      @users = User.where("name LIKE?","#{word}%")
+      @users = User.where("introduction LIKE?", "#{word}%")
+    elsif search == "backward_match"
+      @users = User.where("name LIKE?","%#{word}")
+      @users = User.where("introduction LIKE?", "%#{word}")
+    elsif search == "partial_match"
+      @users = User.where("name LIKE?","%#{word}%")
+      @users = User.where("introduction LIKE?", "%#{word}%")
+    else
+      @users = User.all
+    end
+  end
+
 end
